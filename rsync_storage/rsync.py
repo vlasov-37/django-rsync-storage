@@ -6,6 +6,8 @@ from django.conf import settings
 
 import os
 from tasks import rsync_task
+CURRENT_HOST = 'current'
+
 
 @deconstructible
 class RSyncStorage(FileSystemStorage):
@@ -14,7 +16,7 @@ class RSyncStorage(FileSystemStorage):
         """
         name - примерно такого вида - orders_media/1_rGSQIX2.png
         """
-        current_settings = next(iter([s for s in settings.RSYNC_HOSTS if s.get('host') == 'current']), None)
+        current_settings = next(iter([s for s in settings.RSYNC_HOSTS if s.get('host') == CURRENT_HOST]), None)
         if not current_settings or not current_settings.get('prefix'):
             return name
         upload_dir, file_name = os.path.split(name)
@@ -39,6 +41,8 @@ class RSyncStorage(FileSystemStorage):
         abs_path_to_file_from = os.path.join(settings.MEDIA_ROOT, name)
         for RSYNC_HOST_CONF in settings.RSYNC_HOSTS:
             RSYNC_HOST_TO = RSYNC_HOST_CONF['host']
+            if RSYNC_HOST_TO == CURRENT_HOST:
+                continue
             RSYNC_MEDIA_ROOT_TO = RSYNC_HOST_CONF['media_root']
             abs_path_file_name_to = os.path.join(RSYNC_MEDIA_ROOT_TO, name)
             dir_to = os.path.dirname(abs_path_file_name_to) + '/'
