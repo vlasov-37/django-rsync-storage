@@ -17,7 +17,7 @@ def _copy_to_remote_host(dir_from, remote_dir_to):
         return False
     return True
 
-@task(ignore_result=True, time_limit=300)
+@task(ignore_result=False, time_limit=300)
 def rsync_task(dir_from, dir_to):
     _copy_to_remote_host(dir_from, dir_to)
 
