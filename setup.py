@@ -16,7 +16,7 @@ setup(
     license='BSD License',  # example license
     description='Django storage for rsync distributive copy of files',
     long_description=README,
-    url='https://github.com/g10k/sw_rsync_storage',
+    url='https://github.com/g10k/django-rsync-storage',
     author='Sergey Vlasov',
     author_email='g10k.info@gmail.com',
     classifiers=[
