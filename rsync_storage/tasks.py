@@ -9,7 +9,7 @@ def _copy_to_remote_host(dir_from, remote_dir_to):
         # res_code = subprocess.call(['rsync', dir_from, remote_dir_to, '-avz'])
         res_code = subprocess.call(["rsync", "-avz", "-e", "ssh -oNumberOfPasswordPrompts=0", dir_from, remote_dir_to])
         if res_code != 0:
-            raise Exception(u'no ssh connection to %s' % remote_dir_to)
+            raise IOError(u'no ssh connection to %s' % remote_dir_to)
 
     except OSError as ex:
         return False
